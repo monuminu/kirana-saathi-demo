@@ -82,7 +82,7 @@ export function recordMovement(state: InventoryState, productId: string, type: M
   if (type === 'in') {
     stockAfter = product.stock + baseQuantity;
   } else {
-    stockAfter = product.stock + baseQuantity;
+    stockAfter = product.stock - baseQuantity;
   }
   if (!Number.isSafeInteger(stockAfter)) throw new Error('कुल स्टॉक बहुत बड़ा है।');
   return {
