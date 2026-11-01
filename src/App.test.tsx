@@ -60,6 +60,6 @@ describe('shop inventory screen', () => {
   });
   it('opens the companion help experience through the support link', () => {
     render(<App />);
-    expect(screen.getByRole('link', { name: 'ऐप सहायता' })).toHaveAttribute('href', 'http://127.0.0.1:4300');
+    expect(screen.getByRole('link', { name: 'ऐप सहायता' })).toHaveAttribute('href', 'http://127.0.0.1:4300/?lang=hi');
   });
 });
