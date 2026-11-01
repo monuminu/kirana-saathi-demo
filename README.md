@@ -65,6 +65,12 @@ docker run --rm -p 127.0.0.1:4301:80 \
 
 This command serves the merchant app. The companion support app is a separate process and URL. A container’s build/test environment can use Node 22 or later; the Vitest worker disables Node’s experimental native Web Storage so tests exercise real jsdom browser storage consistently on newer Node versions.
 
+## Azure deployment
+
+Open the public Hindi inventory demo at [किराना साथी on Azure](https://thankful-bay-05dfcb500.1.azurestaticapps.net). It is hosted on **Azure Static Web Apps, Free tier**, in the isolated `rg-kirana-saathi-demo` resource group. The deployed baseline preserves the intentional sale defect: selling 2 kg of sugar from 15 kg shows 17 kg. Reset restores the synthetic seed data.
+
+The app runs entirely in the browser and stores each visitor's demo inventory in that browser's localStorage. “ऐप सहायता” opens the separately running companion app at `http://127.0.0.1:4300` by default. See [Azure deployment details and repeatable publishing commands](docs/deployment.md). Deployment is manual; GitHub pushes and draft repair PRs do not automatically publish to Azure.
+
 ## Files
 
 `src/inventory.ts` is the pure stock engine and intended repair target. `src/storage.ts` owns validation/persistence. `src/App.tsx` is the Hindi screen; `src/styles.css` is the responsive theme. Tests live beside those modules. `package-lock.json` fixes dependency resolution. Local verification evidence and screenshots live in ignored `work/`.
