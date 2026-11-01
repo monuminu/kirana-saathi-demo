@@ -88,7 +88,7 @@ export default function App() {
   const lowCount = inventory.products.filter(product => product.stock <= product.lowStockThreshold).length;
   const stockValue = inventory.products.reduce((total, product) => total + product.pricePaise * product.stock / (product.unit === 'piece' ? 1 : 1000), 0);
   const search = query.trim().toLocaleLowerCase();
-  const products = inventory.products.filter(product => (view !== 'low' || product.stock <= product.lowStockThreshold) && `${nameOf(product)} ${product.englishName} ${nameOf(product)}`.toLocaleLowerCase().includes(search));
+  const products = inventory.products.filter(product => (view !== 'low' || product.stock <= product.lowStockThreshold) && `${product.name} ${product.englishName} ${nameOf(product)}`.toLocaleLowerCase().includes(search));
   const supportUrl = localizedHelpUrl(import.meta.env.VITE_SUPPORT_URL || 'http://127.0.0.1:4300', language);
 
   useEffect(() => { applyLanguage(language); }, [language]);

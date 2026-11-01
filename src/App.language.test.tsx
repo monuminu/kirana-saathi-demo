@@ -10,6 +10,21 @@ beforeEach(() => { window.history.replaceState({}, '', '/'); });
 afterEach(() => { vi.restoreAllMocks(); window.history.replaceState({}, '', '/'); });
 
 describe('inventory language choice', () => {
+  // Catches a translated search index dropping the canonical Hindi product name on language change.
+  it('keeps Hindi search results visible when switching to English and back', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.type(screen.getByRole('searchbox', { name: 'सामान खोजें' }), 'चीनी');
+    expect(screen.getByRole('button', { name: 'चीनी चुनें' })).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'English' }));
+    expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveValue('चीनी');
+    expect(screen.getByRole('button', { name: 'Select Sugar' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Select Rice' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'हिन्दी' }));
+    expect(screen.getByRole('searchbox', { name: 'सामान खोजें' })).toHaveValue('चीनी');
+    expect(screen.getByRole('button', { name: 'चीनी चुनें' })).toBeInTheDocument();
+  });
+
   // Catches switching languages reinitializing inventory, clearing inputs, or losing the current ledger view.
   it('switches both ways while keeping entered quantities, search, stock and ledger', async () => {
     const user = userEvent.setup();
